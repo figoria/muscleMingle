@@ -21,6 +21,13 @@ Route::get('posts',function (){
     return view('posts');
 });
 
-Route::get('exercise',function (){
-    return view('exercise');
+Route::get('exercise/{post}',function ($slug){
+    $path = (__DIR__ . "/../resources/exercise/{$slug}.html");
+    if(! file_exists($path)){
+        return redirect('/');
+    }
+    $post = file_get_contents($path);
+   return view('exercise',[
+       'post' => $post
+  ]);
 });
